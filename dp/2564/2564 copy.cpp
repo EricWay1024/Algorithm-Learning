@@ -17,26 +17,53 @@
 #include<vector>
 #include<numeric>
 #include<functional>
-#include<cstdint>
-#include<climits>
 using namespace std;
 #define rep(i,from,to) for(register int i=(int)(from);i<=(int)(to);++i)
-#define rev(i,from,to) for(register int i=(int)(from);i>=(int)(to);--i)
 #define For(i,to) for(register int i=0;i<(int)(to);++i)
 typedef long long ll;
-typedef long double ld;
-inline ll read(){
+inline int read(){
     ll x=0; ll sign=1; char c=getchar();
     while(c>'9' || c<'0') {if (c=='-') sign=-1;c=getchar();}
     while(c>='0' && c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return x*sign;
 }
+#define N 1001000
+int n, k;
+int pearl_cnt;
+pair< int, int > pearl[N]; 
+int f[70];
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("2564.in", "r", stdin);
     double TIMEA = clock();
 #endif
+    n = read();
+    k = read();
+    rep(i, 1, k) {
+        int t = read();
+        For(_, t) {
+            pearl[++pearl_cnt] = make_pair(read(), i);
+        }
+    }
+    sort(pearl + 1, pearl + n + 1);
+    memset(f, -1, sizeof(f));
+
+    int ans = INT32_MAX;
+
+    rep(i, 1, n) {
+        auto &prl = pearl[i];
+        int x, v; tie(x, v) = prl;
+
+        f[v] = x;
+
+        int minx = *min_element(f + 1, f + 1 + k);
+        if (minx != -1) {
+            ans = min(ans, x - minx);
+        }
+    }
+
+    cout << ans << endl;
 
 
 #ifdef D

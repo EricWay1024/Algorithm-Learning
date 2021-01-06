@@ -17,26 +17,56 @@
 #include<vector>
 #include<numeric>
 #include<functional>
-#include<cstdint>
-#include<climits>
 using namespace std;
 #define rep(i,from,to) for(register int i=(int)(from);i<=(int)(to);++i)
-#define rev(i,from,to) for(register int i=(int)(from);i>=(int)(to);--i)
 #define For(i,to) for(register int i=0;i<(int)(to);++i)
 typedef long long ll;
-typedef long double ld;
 inline ll read(){
     ll x=0; ll sign=1; char c=getchar();
     while(c>'9' || c<'0') {if (c=='-') sign=-1;c=getchar();}
     while(c>='0' && c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return x*sign;
 }
+int n, root;
+#define N 501000
+vector< pair<int, ll> > son[N];
+int fa[N]; ll f[N], g[N];
+
+void dfsone(int u) {
+    for(auto e : son[u]) {
+        int v; ll d; tie(v, d) = e;
+        if (v == fa[u]) continue;
+        fa[v] = u;
+        dfsone(v);
+        f[u] = max(f[u], f[v] + d);
+    }
+}
+
+void dfstwo(int u) {
+    for(auto e : son[u]) {
+        int v; ll d; tie(v, d) = e;
+        if (v == fa[u]) continue;
+        dfstwo(v);
+        g[u] += g[v] + (f[u] - f[v] - d);
+    }
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("1131.in", "r", stdin);
     double TIMEA = clock();
 #endif
+    n = read(), root = read();
+    For(_, n-1) {
+        int a = read(), b = read();
+        ll t = read();
+        son[a].push_back(make_pair(b, t));
+        son[b].push_back(make_pair(a, t));
+    }
+    dfsone(root);
+    dfstwo(root);
+
+    cout << g[root] << "\n";
 
 
 #ifdef D

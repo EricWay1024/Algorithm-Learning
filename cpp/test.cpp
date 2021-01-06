@@ -34,6 +34,14 @@ int main() {
     // freopen("", "r", stdin);
     double TIMEA = clock();
 #endif
+    double sss = -1.0/0.0;
+    cout << sss << endl;
+    return 0;
+    ll M = 1000000007ll;
+    cout << M*M << endl;
+    return 0;
+    string c = "sfdf";
+    cout << c + '1' << endl;
 
     auto f = [](int x, int y) -> int {
         return (x >> y) & 1;

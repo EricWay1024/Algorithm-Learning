@@ -31,13 +31,37 @@ inline ll read(){
     while(c>='0' && c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return x*sign;
 }
+ll L, R;
+vector<int> diml, dimr;
+
+ll f[15][11][2][2][2][2][2][2];
+ll dfs(int x, int st1, int st2, int s3, int h8, int h4, int op1, int op2) {
+    if (x == -1) return s3 && (!h8 || !h4);
+    ll &ret = f[x][st1][st2][s3][h8][h4][op1][op2];
+    if (ret != -1) return ret;
+    int minn = op1 ? diml[x] : 0;
+    int maxx = op2 ? dimr[x] : 9;
+    ret = 0;
+    rep(i, minn, maxx) {
+        ret += dfs(x - 1, i, st1 == i, (st2 && st1 == i) || s3, h8 || i == 8, h4 || i == 4, op1 && i == minn, op2 && i == maxx);
+    }
+    return ret;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("4124.in", "r", stdin);
     double TIMEA = clock();
 #endif
-
+    L = read(); R = read();
+    while(L){
+        diml.push_back(L%10); L/=10;
+    }
+    while(R){
+        dimr.push_back(R%10); R/=10;
+    }
+    memset(f, -1, sizeof(f));
+    cout << dfs(dimr.size()-1, 10, 0, 0, 0, 0, 1, 1) << endl;
 
 #ifdef D
     double TIMEB=clock();
