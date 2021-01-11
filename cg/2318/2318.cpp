@@ -1,3 +1,4 @@
+//#include <bits/stdc++.h>
 #include<algorithm>
 #include<bitset>
 #include<cmath>
@@ -16,7 +17,7 @@
 #include<vector>
 #include<numeric>
 #include<functional>
-// #include<cstdint>
+#include<cstdint>
 #include<climits>
 using namespace std;
 #define rep(i,from,to) for(register int i=(int)(from);i<=(int)(to);++i)
@@ -33,7 +34,7 @@ inline ll read(){
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("2318.in", "r", stdin);
     double TIMEA = clock();
 #endif
 
