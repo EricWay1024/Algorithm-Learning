@@ -18,6 +18,7 @@
 #include<functional>
 // #include<cstdint>
 #include<climits>
+#include<iomanip>
 using namespace std;
 #define rep(i,from,to) for(int i=(int)(from);i<=(int)(to);++i)
 #define rev(i,from,to) for(int i=(int)(from);i>=(int)(to);--i)
@@ -36,7 +37,7 @@ inline int read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
-const db eps=1e-10;
+const db eps=1e-8;
 const db pi=acos(-1.0);
 int dcmp(db x) {
     if (fabs(x) < eps) return 0;
@@ -47,7 +48,8 @@ struct Point {
     Point(db x=0, db y=0):x(x), y(y) { }
     void input(){ cin>>x>>y; }
     void output() {
-        printf("(%.2lf, %.2lf)\n", x, y);
+        cout << fixed << setprecision(2) << "POINT " << x << " " << y << endl; 
+        // printf("POINT %.2lf, %.2lf\n", x, y);
     }
 };
 typedef Point Vector;
@@ -78,10 +80,9 @@ struct Line {
     Point P; Vector v; double ang; Line() {}
     Line(Point P, Vector v):P(P), v(v) { ang = atan2(v.y, v.x); }
     bool operator< (const Line &L) const  { return ang < L.ang; }
-    double value(double x) { return P.y + (x - P.x) * v.y / v.x; }
     void output() { printf("P=(%.2lf, %.2lf), v=(%.2lf, %.2lf)\n", P.x, P.y, v.x, v.y); }
 };
-bool OnLeft(Line L, Point p) { return Cross(L.v, p-L.P) > 0; }
+bool OnLine(Line L, Point p) { return dcmp(Cross(L.v, p-L.P))==0; }
 Point GetIntersection(Line a, Line b) {
     Vector u = a.P-b.P;
     double t = Cross(b.v, u) / Cross(a.v, b.v);
@@ -90,9 +91,28 @@ Point GetIntersection(Line a, Line b) {
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("POJ-1269.in", "r", stdin);
     db TIMEA = clock();
 #endif
+    puts("INTERSECTING LINES OUTPUT");
+    int T=read();
+    while(T--){
+        Point a, b, c, d;
+        a.input(); b.input(); c.input(); d.input();
+        Line m = Line(a, b-a);
+        Line n = Line(c, d-c);
+        if (!dcmp(Cross(m.v, n.v))) {
+            if (OnLine(m, n.P)) {
+                puts("LINE");
+            } else {
+                puts("NONE");
+            }
+        } else {
+            Point p=GetIntersection(m, n);
+            p.output();
+        }
+    }
+    puts("END OF OUTPUT");
 
 
 #ifdef D

@@ -18,37 +18,61 @@
 #include<functional>
 // #include<cstdint>
 #include<climits>
-#include<iomanip>
 using namespace std;
 #define rep(i,from,to) for(int i=(int)(from);i<=(int)(to);++i)
 #define rev(i,from,to) for(int i=(int)(from);i>=(int)(to);--i)
 #define For(i,to) for(int i=0;i<(int)(to);++i)
 #define see(x) (cerr<<(#x)<<'='<<(x)<<endl)
-#define printCase(i) printf("Case %d: ", i)
 void dbg() {cout << "\n";}
 template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
 #define logs(x...) {cout << #x << " -> "; dbg(x);}
-#define mmst(a,x) memset(a, x, sizeof(a))
 typedef long long ll;
 typedef long double ld;
-typedef double db;
 inline ll read(){
-    ll x=0;bool s=1;char c=getchar();
-    while(c>'9'||c<'0'){if(c=='-')s=0;c=getchar();}
-    while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
-    return s?x:~x+1;
+    ll x=0; ll sign=1; char c=getchar();
+    while(c>'9' || c<'0') {if (c=='-') sign=-1;c=getchar();}
+    while(c>='0' && c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
+    return x*sign;
+}
+#define N 12000
+int n;
+vector<int> son[N];
+int fa[N];
+int dis[N]; int d[N]; int ans;
+
+void update_mxs(int t, int &mx1, int &mx2) {
+    if (t >= mx1) mx2 = mx1, mx1 = t;
+    else mx2 = max(mx2, t);
+}
+
+void dfs(int u) {
+    int mx1 = -1, mx2 = -1;
+    for(int v : son[u]) if (v != fa[u]) {
+        fa[v] = u;
+        dfs(v);
+        update_mxs(dis[v], mx1, mx2);
+    }
+    dis[u] = mx1 + 1;
+    d[u] = mx1 + mx2 + 2;
+    ans = max(ans, d[u]);
 }
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("SPOJ-PT07Z.in", "r", stdin);
     double TIMEA = clock();
 #endif
-
-
+    n=read();
+    rep(i,1,n-1){
+        int u=read(),v=read();
+        son[u].push_back(v);
+        son[v].push_back(u);
+    }
+    dfs(1);
+    printf("%d\n", ans);
 #ifdef D
     double TIMEB=clock();
-    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
+    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/1000);
 #endif
     return 0;
 }

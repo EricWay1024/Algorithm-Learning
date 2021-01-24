@@ -24,7 +24,6 @@ using namespace std;
 #define rev(i,from,to) for(int i=(int)(from);i>=(int)(to);--i)
 #define For(i,to) for(int i=0;i<(int)(to);++i)
 #define see(x) (cerr<<(#x)<<'='<<(x)<<endl)
-#define printCase(i) printf("Case %d: ", i)
 void dbg() {cout << "\n";}
 template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
 #define logs(x...) {cout << #x << " -> "; dbg(x);}
@@ -38,12 +37,29 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+map<int, int> mp;
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1148.in", "r", stdin);
     double TIMEA = clock();
 #endif
+    int T=read();
+    rep(i, 1, T) {
+        mp.clear();
+        int n=read();
+        For(_, n) {
+            int k=read();
+            mp[k]++;
+        }
+        ll sum = 0;
+        for(auto p : mp) {
+            int k, t; tie(k, t) = p;
+            // logs(k, t)
+            sum += (k+1)*ceil((ld)t/(k+1));
+        }
+        printf("Case %d: %lld\n", i, sum);
+    }
 
 
 #ifdef D

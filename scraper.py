@@ -41,13 +41,40 @@ def vjudge_scraper(problem_id):
     response = requests.get(f'https://vjudge.net/problem/description/{data_id}?{data_version}')
     parsed_response = BeautifulSoup(response.text, 'html.parser')
     text_area = parsed_response.find('textarea')
-    text_area_parsed = json.loads(text_area.text)
-    sample_input = next(filter(lambda x: x['title'] == 'Sample Input', text_area_parsed['sections']))
-    sample_input_content = BeautifulSoup(sample_input['value']['content'], 'html.parser')
-    return sample_input_content.text
+    text_area_parsed = json.loads(text_area.text)['sections']
+    # print(text_area_parsed)
+    
+    def get_sample_input_content(title):
+        sample_input = next(filter(lambda x: x['title'] == title, text_area_parsed))
+        sample_input_content = BeautifulSoup(sample_input['value']['content'], 'html.parser')
+        
+        if title == 'Sample Input':
+            return sample_input_content.text
+        
+        elif title == 'Examples':
+            input_code = sample_input_content.find('pre')
+            for br in input_code.find_all('br'):
+                br.replace_with('\n')
+            return input_code.text
+    
+    def helper(title):
+        try:
+            return get_sample_input_content(title)
+        except StopIteration:
+            return None
+    
+    for title in ["Examples", 'Sample Input']:
+        ans = helper(title)
+        if ans is not None:
+            return ans
+    raise RuntimeError('Unknown web page format.')
+
 
 def scraper(problem_id, oj):
     if (oj == 'luogu'):
         return luogu_scraper(problem_id)
     else:
         return vjudge_scraper(problem_id)
+
+if __name__ == '__main__':
+    print(vjudge_scraper('SGU-325'))

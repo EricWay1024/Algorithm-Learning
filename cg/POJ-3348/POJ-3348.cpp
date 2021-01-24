@@ -28,72 +28,69 @@ template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg
 #define logs(x...) {cout << #x << " -> "; dbg(x);}
 #define mmst(a,x) memset(a, x, sizeof(a))
 typedef long long ll;
-typedef long double ld;
-typedef double db;
+typedef int db;
 inline int read(){
     int x=0;bool s=1;char c=getchar();
     while(c>'9'||c<'0'){if(c=='-')s=0;c=getchar();}
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
-const db eps=1e-10;
-const db pi=acos(-1.0);
-int dcmp(db x) {
-    if (fabs(x) < eps) return 0;
-    else return x < 0 ? -1 : 1;
-}
+
 struct Point {
     db x, y;
     Point(db x=0, db y=0):x(x), y(y) { }
     void input(){ cin>>x>>y; }
-    void output() {
-        printf("(%.2lf, %.2lf)\n", x, y);
-    }
 };
 typedef Point Vector;
 Vector operator+ (Vector A, Vector B) { return Vector(A.x+B.x, A.y+B.y); }
 Vector operator- (Vector A, Vector B) { return Vector(A.x-B.x, A.y-B.y); }
-Vector operator* (Vector A, db p) { return Vector(A.x*p, A.y*p); }
-Vector operator/ (Vector A, db p) { return Vector(A.x/p, A.y/p); }
 bool operator<(const Point& a, const Point& b) {
     return a.x<b.x || (a.x==b.x && a.y<b.y);
 }
-bool operator==(const Point& a, const Point& b) {
-    return !dcmp(a.x-b.x) && !dcmp(a.y-b.y);
+bool operator==(const Point &a, const Point &b){
+    return a.x==b.x && a.y==b.y;
 }
-db Dot(Vector a, Vector b) {return a.x*b.x+a.y*b.y;}
-db Length(Vector a) {return sqrt(Dot(a, a));}
-db Angle(Vector a, Vector b) {return acos(Dot(a, b)/Length(a)/Length(b));}
 db Cross(Vector a, Vector b) {return a.x*b.y-a.y*b.x;}
-Point GetLineProjection(Point P, Point A, Point B) {
-    Vector v=B-A;
-    return A+v*(Dot(v,P-A)/Dot(v,v));
+
+#define N 10010
+Point p[N], ch[N];
+int ConvexHull(int n) {
+    int k, m=0;
+    sort(p, p+n);
+    n = distance(p, unique(p, p+n));
+    For(i,n){
+        while(m>1 && Cross(ch[m-1]-ch[m-2], p[i]-ch[m-2]) <= 0) m--;
+        ch[m++] = p[i];
+    }
+    k = m;
+    rev(i, n-2, 0){
+        while(m>k && Cross(ch[m-1]-ch[m-2], p[i]-ch[m-2]) <= 0) m--;
+        ch[m++] = p[i];
+    }
+    if (n > 2) m--;
+    return m;
 }
-bool SegmentProperIntersection(Point a1, Point a2, Point b1, Point b2) {
-    double c1=Cross(a2-a1,b1-a1), c2=Cross(a2-a1,b2-a1),
-        c3=Cross(b2-b1,a1-b1), c4=Cross(b2-b1,a2-b1);
-    return dcmp(c1)*dcmp(c2)<0 && dcmp(c3)*dcmp(c4)<0;
-}
-struct Line {
-    Point P; Vector v; double ang; Line() {}
-    Line(Point P, Vector v):P(P), v(v) { ang = atan2(v.y, v.x); }
-    bool operator< (const Line &L) const  { return ang < L.ang; }
-    double value(double x) { return P.y + (x - P.x) * v.y / v.x; }
-    void output() { printf("P=(%.2lf, %.2lf), v=(%.2lf, %.2lf)\n", P.x, P.y, v.x, v.y); }
-};
-bool OnLeft(Line L, Point p) { return Cross(L.v, p-L.P) > 0; }
-Point GetIntersection(Line a, Line b) {
-    Vector u = a.P-b.P;
-    double t = Cross(b.v, u) / Cross(a.v, b.v);
-    return a.P+(a.v*t);
+db ConvexPolygonArea(int n) {
+    db area = 0;
+    rep(i, 1, n-2) {
+        area += Cross(ch[i]-ch[0],ch[i+1]-ch[0]);
+    }
+    return area;
 }
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("POJ-3348.in", "r", stdin);
     db TIMEA = clock();
 #endif
-
+    int n=read();
+    For(i,n){
+        p[i].input();
+    }
+    int m = ConvexHull(n);
+    db area = ConvexPolygonArea(m);
+    int ans = area / 100;
+    printf("%d\n", ans);
 
 #ifdef D
     db TIMEB=clock();

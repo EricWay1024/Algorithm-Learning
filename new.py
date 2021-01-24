@@ -21,7 +21,10 @@ except FileExistsError:
     pass
 
 for s in ['cpp', 'in']:
-    copyfile(f'template/template.{s}', f'{problem_type}/{problem}/{problem}.{s}')
+    if s == 'cpp' and problem_type == 'cg':
+        copyfile(f'template/template_{problem_type}.{s}', f'{problem_type}/{problem}/{problem}.{s}')
+    else:
+        copyfile(f'template/template.{s}', f'{problem_type}/{problem}/{problem}.{s}')
 
 with open(f'{problem_type}/{problem}/{problem}.cpp') as f:
     cppcode = f.read()

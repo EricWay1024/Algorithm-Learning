@@ -38,12 +38,22 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+ld solve(int n){
+    ld ans=0;
+    rep(i,1,n) ans += (ld)n/i;
+    return ans;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1248.in", "r", stdin);
     double TIMEA = clock();
 #endif
+    int t=read();
+    rep(i,1,t){
+        printCase(i);
+        printf("%.10llf\n", solve(read()));
+    }
 
 
 #ifdef D

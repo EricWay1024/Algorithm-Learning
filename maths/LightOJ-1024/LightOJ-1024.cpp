@@ -24,7 +24,6 @@ using namespace std;
 #define rev(i,from,to) for(int i=(int)(from);i>=(int)(to);--i)
 #define For(i,to) for(int i=0;i<(int)(to);++i)
 #define see(x) (cerr<<(#x)<<'='<<(x)<<endl)
-#define printCase(i) printf("Case %d: ", i)
 void dbg() {cout << "\n";}
 template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
 #define logs(x...) {cout << #x << " -> "; dbg(x);}
@@ -41,7 +40,7 @@ inline ll read(){
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1024.in", "r", stdin);
     double TIMEA = clock();
 #endif
 

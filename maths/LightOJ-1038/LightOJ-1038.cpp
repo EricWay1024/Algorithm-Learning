@@ -38,12 +38,38 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+#define N 512345
+ld f[N];
+ld solve(int n){
+    if (n==1) return 0;
+    if (f[n] > 0) return f[n];
+    int cnt = 2;
+    ld ans = 0;
+    for(int i=2; i*i<=n; i++) {
+        if (!(n % i)) {
+            if (i*i==n) {
+                cnt += 1;
+                ans += solve(i);
+            } else {
+                cnt += 2;
+                ans += solve(i) + solve(n / i);
+            }
+        }
+    }
+    return f[n] = (ans+cnt)/(cnt-1);
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1038.in", "r", stdin);
     double TIMEA = clock();
 #endif
+    int T=read();
+    rep(i,1,T){
+        printCase(i);
+        ld ans = solve(read());
+        cout<<fixed<<setprecision(10)<<ans<<endl;
+    }
 
 
 #ifdef D
