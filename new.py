@@ -1,3 +1,4 @@
+#!/bin/python
 from sys import argv
 from os import mkdir, chdir
 from shutil import copyfile
@@ -23,6 +24,8 @@ except FileExistsError:
 for s in ['cpp', 'in']:
     if s == 'cpp' and problem_type == 'cg':
         copyfile(f'template/template_{problem_type}.{s}', f'{problem_type}/{problem}/{problem}.{s}')
+    elif s == 'cpp' and problem.startswith('LightOJ'):
+        copyfile(f'template/template_loj.{s}', f'{problem_type}/{problem}/{problem}.{s}')
     else:
         copyfile(f'template/template.{s}', f'{problem_type}/{problem}/{problem}.{s}')
 

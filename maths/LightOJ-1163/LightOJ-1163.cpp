@@ -24,7 +24,7 @@ using namespace std;
 #define rev(i,from,to) for(int i=(int)(from);i>=(int)(to);--i)
 #define For(i,to) for(int i=0;i<(int)(to);++i)
 #define see(x) (cerr<<(#x)<<'='<<(x)<<endl)
-#define printCase(i) printf("Case %d: ", i)
+#define printCase(i) printf("Case %d:", i)
 #define endl '\n'
 #define coutP(i) cout<<fixed<<setprecision(i)
 void dbg() {cout << "\n";}
@@ -40,15 +40,38 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+void solve(){
+    ll n, x, b;
+    n=read();
+    vector<ll> a;
+    x=n%9;
+    b=(n-x)/9;
+    a.push_back(10*b+x);
 
+    if (!x) {
+        x=9;
+        b=(n-x)/9;
+        a.push_back(10*b+x);
+    }
+
+    if(a.size()>1) sort(a.begin(), a.end());
+    for(auto i:a){
+        printf(" %lld", i);
+    } 
+    putchar(10);
+
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1163.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

@@ -41,17 +41,61 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+#define N 200
+ll prime[N];
+bool is_prime[N];
+int Eratosthenes(int n) {
+  int p = 0;
+  mmst(is_prime, 1);
+  is_prime[0] = is_prime[1] = 0;
+  rep(i,2,n) {
+    if (is_prime[i]) {
+      prime[p++] = i;  
+      if ((ll)i * i <= n)
+        for (int j = i * i; j <= n; j += i)
+          is_prime[j] = 0;  
+    }
+  }
+  return p;
+}
+
+
+void solve(){
+    ll n=read();
+    vector<ll> v;
+    for(int i=0; prime[i]<=n; i++) {
+        ll p=prime[i];
+        ll a=0;
+        ll pp=p;
+        while(1){
+            a += n/pp;
+            pp *= p;
+            if (n/pp == 0) break;
+        }
+        v.push_back(a);
+    }
+    printf("%lld", n);
+    For(i,v.size()){
+        printf(" %c ", i ? '*' : '=');
+        printf("%lld (%lld)", prime[i], v[i]);
+    }
+    putchar(10);
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1035.in", "r", stdin);
+    double TIMEA = clock();
 #endif
-
-
+    Eratosthenes(N-1);
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }

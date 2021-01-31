@@ -40,15 +40,43 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+#define N 1123456
+ll two[N], five[N];
+void init() {
+    ll p;
+    rep(i,2,N-1){
+        p=2;
+        while(!(i % p)) two[i]++, p<<=1;
+        two[i] += two[i-1];
 
+        p=5;
+        while(!(i % p)) five[i]++, p+=(p<<2);
+        five[i] += five[i-1];
+    }
+}
+void solve(){
+    ll n=read(), r=read(), p=read(), q=read();
+    ll t1, f1, t2, f2;
+    t1 = two[n] - two[r] - two[n-r];
+    f1 = five[n] - five[r] - five[n-r];
+
+    t2 = (two[p]-two[p-1]) * q;
+    f2 = (five[p]-five[p-1]) * q;
+
+    cout << min(t1+t2, f1+f2) << endl;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1090.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

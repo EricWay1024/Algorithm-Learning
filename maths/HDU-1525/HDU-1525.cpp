@@ -41,12 +41,26 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+int solve(int a, int b) {
+    if (a < b) swap(a, b);
+    if (b == 0) return 0;
+    if (!(a % b)) return 1;
+    if (a - b >= b) return 1;
+    return !solve(b, a%b);
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-1525.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    int a, b;
+    while (1) {
+        a=read(), b=read();
+        if (!a && !b) break;
+        cout << (solve(a, b) ? "Stan wins" : "Ollie wins") << endl;
+    }
 
 
 #ifdef D

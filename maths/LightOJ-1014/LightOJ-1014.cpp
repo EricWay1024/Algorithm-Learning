@@ -40,18 +40,47 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+vector<ll> v;
+void solve(){
+    v.clear();
+    ll a=read(), b=read();
+    ll c = a - b;
+    ll s = sqrt(c);
+    rep(i,1,s){
+        if (!(c % i)) {
+            if (c/i > b) v.push_back(c/i);
+            if (i > b && i*i != c) v.push_back(i);
+        }
+    }
+    sort(v.begin(), v.end());
+    bool first = 1;
+    if (v.size()) {
+        for(auto i : v){
+            if (first) first = 0;
+            else putchar(32);
+            cout << i;
+        }
+        cout << endl;
+    } else {
+        puts("impossible");
+    }
 
+
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1014.in", "r", stdin);
+    double TIMEA = clock();
 #endif
-
-
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }

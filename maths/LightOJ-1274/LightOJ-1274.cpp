@@ -25,7 +25,6 @@ using namespace std;
 #define For(i,to) for(int i=0;i<(int)(to);++i)
 #define see(x) (cerr<<(#x)<<'='<<(x)<<endl)
 #define printCase(i) printf("Case %d: ", i)
-#define endl '\n'
 #define coutP(i) cout<<fixed<<setprecision(i)
 void dbg() {cout << "\n";}
 template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
@@ -40,18 +39,47 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+// #define N 5001
+// ld f[N][N];
+// ld dp(int m, int n) {
+//     if (m==0 && n==0) return 0;
+//     if (n == 0) { // only yes
+//         return m-1;
+//     }
+//     if (m == 0) { // only no
+//         return n;
+//     }
+//     ld &ans = f[m][n];
+//     if (ans > 0) return ans;
+//     ans = (ld)n/(m+n)*(1+dp(m, n-1))+(ld)m/(m+n)*dp(n, m-1);
+//     // logs(m, n, s, ans)
+//     return ans;
+// }
 
+ld solve(int n, int m) {
+    return (ld)(2*n+1)*m/(m+n);
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1274.in", "r", stdin);
+    double TIMEA = clock();
 #endif
-
+    int t=read();
+    rep(i,1,t){printCase(i); int x=read(), y=read(), m=y-2*x, n=x-m; 
+    // logs(m, n)
+    coutP(10)<<solve(m, n)<<endl;}
+    // rep(i, 0, 10) {
+    //     rep(j, 0, 10) {
+    //         cout << i << '\t' << j << '\t';
+    //         coutP(4) << i+j-dp(j,i)<<endl;
+    //     }
+    // }
+    // cout << dp(10, 0, 0) << endl;
 
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }

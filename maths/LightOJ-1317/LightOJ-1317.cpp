@@ -25,7 +25,6 @@ using namespace std;
 #define For(i,to) for(int i=0;i<(int)(to);++i)
 #define see(x) (cerr<<(#x)<<'='<<(x)<<endl)
 #define printCase(i) printf("Case %d: ", i)
-#define endl '\n'
 #define coutP(i) cout<<fixed<<setprecision(i)
 void dbg() {cout << "\n";}
 template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
@@ -41,17 +40,23 @@ inline ll read(){
     return s?x:~x+1;
 }
 
-
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1317.in", "r", stdin);
+    double TIMEA = clock();
 #endif
+    int t=read();
+    rep(i,1,t){
+        printCase(i);
+        int n, m, k; ld p;
+        cin >> n >> m >> k >> p;
+        coutP(10) << (ld) n * k * p << endl;
+    }
 
 
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }

@@ -41,12 +41,41 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+ll p[123];
+ll s[123];
+void solve() {
+    int n=read(), k=read();
+    rep(i,0,n-1) p[i]=read();
+    s[0]=p[0]; 
+    rep(i,1,n-1) s[i]=s[i-1]+p[i];
+    rep(i,0,n-2) p[i]=p[i+1];
+
+    ll addtotal=0;
+    ll add=0;
+    rev(i,n-2,0){
+        ll t = p[i]*100/k;
+        ll r = s[i]-t;
+        if (r < 0) {
+            addtotal-=r;
+            add-=r;
+        } else if (r > 0) {
+            
+        }
+    }
+    cout << addtotal << endl;
+
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("1476-1.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    int t=read();
+    while(t--){
+        solve();
+    }
 
 
 #ifdef D

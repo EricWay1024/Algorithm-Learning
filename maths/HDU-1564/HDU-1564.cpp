@@ -41,12 +41,43 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+const int d[4][2] = {{0,1}, {0,-1}, {1,0}, {-1,0}};
+bool vis[1000][1000];
+
+bool valid(int x, int y, int n) {
+    return (x >= 1 && x <= n) && (y >= 1 && y <= n) && !vis[x][y];
+}
+
+bool dfs(int x, int y, int n) {
+    int ret = 0;
+    vis[x][y] = 1;
+    For(i, 4) {
+        int dx=d[i][0], dy=d[i][1];
+        if (!valid(x+dx, y+dy, n)) continue;
+        int res = dfs(x+dx, y+dy, n);
+        if (!res) ret = 1;
+    }
+    vis[x][y] = 0;
+    return ret;   
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-1564.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+
+    // rep(i,1,100) {
+    //     mmst(vis, 0);
+    //     cout << i << " " << dfs(1, 1, i) << endl;
+    // }
+
+    while(1) {
+        int n=read();
+        if (!n) break;
+        cout << ((n&1) ? "ailyanlu" : "8600") << endl;
+    }
 
 
 #ifdef D

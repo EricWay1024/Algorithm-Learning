@@ -40,13 +40,21 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+int n;
+void solve() {
+
+}
 
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("1476-2.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    int t=read();
+    while(t--){
+        solve();
+    }
 
 
 #ifdef D

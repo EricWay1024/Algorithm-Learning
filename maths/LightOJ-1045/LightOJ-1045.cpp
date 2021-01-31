@@ -40,18 +40,33 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
-
+const int N = 1e6+7;
+ld lgfac[N];
+void init() {
+    rep(i,2,N-1){
+        lgfac[i]=lgfac[i-1]+log(i);
+    }
+}
+void solve(){
+    ll n=read(), base=read();
+    ll a=lgfac[n] / log(base);
+    cout << a+1 << endl; 
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1045.in", "r", stdin);
+    double TIMEA = clock();
 #endif
-
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }

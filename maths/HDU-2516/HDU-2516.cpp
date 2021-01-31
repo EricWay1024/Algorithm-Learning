@@ -41,12 +41,41 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+bool check(int n) {
+    int a=1, b=1;
+    while(a > 0) {
+        if (a == n) return 1;
+        a += b;
+        swap(a, b);
+    }
+    return 0;
+}
+// int mem[1000][1000];
+// int solve(int n, int limit) {
+//     if (n == 0) return 0;
+//     if (mem[n][limit] > -1) return mem[n][limit];
+//     rep(i,1,limit) {
+//         if (!solve(n-i, i*2)) return mem[n][limit]=1;
+//     }
+//     return mem[n][limit]=0;
+// }
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-2516.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    while(1) {
+        int n=read(); if (!n) break;
+        cout << (check(n) ? "Second win" : "First win") << endl;
+    }
+    // mmst(mem, -1);
+    // rep(i,1,100) {
+    //     cout << i << " " << solve(i, i-1) << endl;
+    // }
+
+
 
 
 #ifdef D

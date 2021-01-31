@@ -40,15 +40,43 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+#define N 40
+ll choose[N][N];
+ll binomial(int n, int k) {
+    if (k > n) return 0;
+    if (n == 1) return 1;
+    if (k == 0) return 1;
+    if (choose[n][k]) return choose[n][k];
+    return choose[n][k] = binomial(n-1, k-1) + binomial(n-1, k);
+}
 
+ll fac[N*N];
+void init() {
+    fac[0]=1;
+    rep(i,1,N*N-1){
+        fac[i]=fac[i-1]*i;
+        // logs(fac[i])
+    }
+}
+
+void solve() {
+    int n=read(), k=read();
+    ll ans=binomial(n, k) * binomial(n, k) * fac[k];
+    cout << ans << endl;
+
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1005.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

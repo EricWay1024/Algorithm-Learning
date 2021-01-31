@@ -32,6 +32,7 @@ template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg
 #define logs(x...) {cout << #x << " -> "; dbg(x);}
 #define mmst(a,x) memset(a, x, sizeof(a))
 typedef long long ll;
+typedef unsigned long long ull;
 typedef long double ld;
 typedef double db;
 inline ll read(){
@@ -41,13 +42,52 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+#define N 3000010
+int phi[N];
+
+void phi_table(int n) {
+  for (int i = 2; i <= n; i++) phi[i] = 0;
+  phi[1] = 1;
+  for (int i = 2; i <= n; i++)
+    if (!phi[i])
+      for (int j = i; j <= n; j += i) {
+        if (!phi[j]) phi[j] = j;
+        phi[j] = phi[j] / i * (i - 1);
+      }
+}
+ull f[N];
+
+void init() {
+    int n=N-1;
+    phi_table(n);
+    rep(i,2,n) {
+        rep(j,1,n/i) {
+            f[i*j] += (ull)phi[i] * i / 2;
+        }
+        f[i] *= (ull)i;
+    }
+    rep(i,2,n){
+        f[i] += f[i-1];
+    }
+}
+
+void solve() {
+    ll n=read();
+    cout << f[n] << endl;
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1375.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 
 #ifdef D
     clock_t TIMEB=clock();

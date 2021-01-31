@@ -41,17 +41,40 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+#define N 5010101
+unsigned long long phi[N+1];
+void phi_table(int n, unsigned long long* phi) {
+  for (int i = 2; i <= n; i++) phi[i] = 0;
+  phi[1] = 1;
+  for (int i = 2; i <= n; i++)
+    if (!phi[i])
+      for (int j = i; j <= n; j += i) {
+        if (!phi[j]) phi[j] = j;
+        phi[j] = phi[j] / i * (i - 1);
+      }
+    
+    rep(i,2,n){
+        phi[i] *= phi[i];
+        phi[i] += phi[i-1];
+    }
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1007.in", "r", stdin);
+    double TIMEA = clock();
 #endif
-
+    phi_table(N, phi);
+    int t=read();
+    rep(cas,1,t){
+        printCase(cas);
+        int a=read(), b=read();
+        cout << phi[b]-phi[a-1] << endl;
+    }
 
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }

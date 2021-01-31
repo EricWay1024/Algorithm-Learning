@@ -40,14 +40,22 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
-
+void solve() {
+    ll n=read(), k=read();
+    ll s = ceil((db)n/k) * k;
+    ll a = ceil((db)s/n);
+    cout << a << endl;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("1476-0.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
+    int T=read();
+    rep(cas, 1, T) {
+        solve();
+    }
 
 #ifdef D
     clock_t TIMEB=clock();

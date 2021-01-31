@@ -41,17 +41,30 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+ll gcd(ll a, ll b){
+    return b ? gcd(b, a%b) : a;
+}
+
+void solve(){
+    ll x1=read(), y1=read(), x2=read(), y2=read();
+    ll dx=abs(x1-x2); ll dy=abs(y1-y2);
+    ll d=gcd(dx, dy);
+    cout << d+1 << endl;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1077.in", "r", stdin);
+    double TIMEA = clock();
 #endif
-
-
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }

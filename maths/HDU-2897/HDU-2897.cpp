@@ -40,13 +40,32 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+bool solve(int n, int p, int q) {
+    if (n <= p) return 0;
+    rep(i,p,q) {
+        if (!solve(n-i, p, q)) return 1;
+    }
+    return 0;
+}
+
+bool ans(int n, int p, int q) {
+    int a=n%(p+q); if (!a) a = p+q;
+    return a > p;
+}
 
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-2897.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    // rep(n,1,100) {
+    //     cout << n << " " << solve(n, 4, 10) << " " << ans(n, 4, 10) << endl;
+    // }
+    int n,p,q;
+    while(~scanf("%d%d%d", &n, &p, &q)) {
+        cout << (ans(n,p,q) ? "WIN" : "LOST") << endl;
+    }
 
 
 #ifdef D

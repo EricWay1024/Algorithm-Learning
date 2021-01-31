@@ -44,9 +44,15 @@ inline ll read(){
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-1846.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    int t=read();
+    while(t--){
+        int n=read(), m=read();
+        int a=(n%(m+1));
+        cout << (a ? "first" : "second") << endl;
+    }
 
 
 #ifdef D

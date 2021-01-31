@@ -40,13 +40,42 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+const int N = 1024;
+int sg[N];
+set<int> st;
+
+void init() {
+    sg[0] = 0;
+    rep(i,1,1000) {
+        st.clear();
+        for(int j=1; j<=i; j<<=1) {
+            st.insert(sg[i-j]);
+        }
+        for(int k=0; ;k++) {
+            if (!st.count(k)) {
+                sg[i] = k;
+                break;
+            }
+        }
+    }
+}
 
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-1847.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    // init();
+    // rep(i,1,20) {
+    //     logs(i, sg[i])
+    // }
+    int n;
+    while(~scanf("%d", &n)) {
+        // cout << (sg[n] ? "Kiki" : "Cici") << endl;
+        cout << (n%3 ? "Kiki" : "Cici") << endl;
+
+    }
 
 
 #ifdef D

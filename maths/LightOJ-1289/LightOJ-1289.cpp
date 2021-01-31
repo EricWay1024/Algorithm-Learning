@@ -41,14 +41,46 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+#define N 6123456
+ll prime[N];
+const int M = 1e8+7;
+bitset<M> is_prime;
+int Eratosthenes(ll n) {
+    int p = 0;
+    is_prime.set();
+    is_prime[0] = is_prime[1] = 0;
+    rep(i,2,n) {
+        if (is_prime[i]) {
+            prime[p++] = i;  
+            For(j, p) {
+                if (i * prime[j] > n) break;
+                is_prime[i * prime[j]] = 0;
+                if (!(i % prime[j])) break;
+            }
+        }
+    }
+    return p;
+}
+
+void solve(){
+    ll n=read();
+
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1289.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    int p=Eratosthenes(1e8);
+    for(int i=0; i<10; i++){
+        cout << prime[i] << endl;
+    }
+    // int T=read();
+    // rep(cas,1,T){
+    //     printCase(cas);
+    //     solve();
+    // }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

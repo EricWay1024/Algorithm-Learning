@@ -19,14 +19,12 @@
 // #include<cstdint>
 #include<climits>
 #include<iomanip>
+#include<complex>
 using namespace std;
 #define rep(i,from,to) for(int i=(int)(from);i<=(int)(to);++i)
 #define rev(i,from,to) for(int i=(int)(from);i>=(int)(to);--i)
 #define For(i,to) for(int i=0;i<(int)(to);++i)
 #define see(x) (cerr<<(#x)<<'='<<(x)<<endl)
-#define printCase(i) printf("Case %d: ", i)
-#define endl '\n'
-#define coutP(i) cout<<fixed<<setprecision(i)
 void dbg() {cout << "\n";}
 template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
 #define logs(x...) {cout << #x << " -> "; dbg(x);}
@@ -41,17 +39,42 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+ll gcd(ll a, ll b) {
+    return b ? gcd(b, a % b) : a;
+}
+
+void solve(){
+    int n=read();
+    ll dm = 0;
+    ll nm = 0;
+    rep(i,1,n){
+        ll a=read();
+        dm += abs(a);
+        if (a > 0) nm++;
+    }
+    if (!nm) printf("inf\n");
+    else {
+        ll d = gcd(dm, nm);
+        printf("%d/%d\n", dm/d, nm/d);
+    }
+}
+#define printCase(i) printf("Case %d: ", i)
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
-    clock_t TIMEA = clock();
+    freopen("LightOJ-1027.in", "r", stdin);
+    double TIMEA = clock();
 #endif
+    int t=read();
+    rep(i,1,t){
+        printCase(i);
+        solve();
+    }
 
 
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    double TIMEB=clock();
+    printf("\n# Time consumed: %.3lfs.\n", (TIMEB-TIMEA)/1000.0);
 #endif
     return 0;
 }
