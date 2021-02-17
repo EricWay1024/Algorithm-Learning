@@ -40,78 +40,35 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+void init() {
 
-// int mem[100][100];
-// int sg(int w, int y) {
-//     if (w == 1) return y + 1;
-//     if (y == 0 && (w % 2) == 0) return 0; 
-//     if (mem[w][y] > -1) return mem[w][y];
-
-//     set<int> st;
-//     st.insert(sg(w-1, y));
-//     rep(i, 0, y-1) st.insert(sg(w, i));
-
-//     for(int i=0; ; ++i) {
-//         if (!st.count(i)) return mem[w][y]=i;
-//     }
-
-// }
-int sg(int w, int y) {
-    if (w == 1) return y + 1;
-    return (w&1) ? y^1 : y;
 }
 
-int n;
-const int N = 1024;
-vector< pair<int, int> > son[N];
-int dfs(int u, int fa) {
-    int ans = 0;
-    for(auto p: son[u]) {
-        int v, w; tie(v, w) = p;
-        if (v == fa) continue;
-        ans ^= sg(w, dfs(v, u));
-    }
-    return ans;
-}
 void solve() {
-    n=read();
-    rep(i,1,n) son[i].clear();
-    rep(i,1,n-1){
-        int u=read()+1;
-        int v=read()+1;
-        int w=read();
-        son[u].push_back(make_pair(v, w));
-        son[v].push_back(make_pair(u, w));
+    int m=read(), n=read();
+    int ans = 0;
+    For(i, m) {
+        int s = 0;
+        For(j, n) {
+            s += read();
+        }
+        ans ^= s;
     }
-    int ans = dfs(1, 0);
-    puts(ans ? "Emily" : "Jolly");
+    puts(ans ? "Alice" : "Bob");
+
 }
 
 int main() {
 #ifdef D
-    freopen("LightOJ-1355.in", "r", stdin);
+    freopen("LightOJ-1247.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-<<<<<<< HEAD
     init();
-=======
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
     int T=read();
     rep(cas,1,T){
         printCase(cas);
         solve();
     }
-<<<<<<< HEAD
-=======
-    // mmst(mem, -1);
-    // rep(w, 1, 10) {
-    //     rep(y, 0, 10) {
-    //         printf("w=%d, y=%d, sg=%d\n", w, y, sg(w, y));
-    //     }
-    // }
-
-
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

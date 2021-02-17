@@ -41,77 +41,59 @@ inline ll read(){
     return s?x:~x+1;
 }
 
-// int mem[100][100];
-// int sg(int w, int y) {
-//     if (w == 1) return y + 1;
-//     if (y == 0 && (w % 2) == 0) return 0; 
-//     if (mem[w][y] > -1) return mem[w][y];
-
-//     set<int> st;
-//     st.insert(sg(w-1, y));
-//     rep(i, 0, y-1) st.insert(sg(w, i));
-
-//     for(int i=0; ; ++i) {
-//         if (!st.count(i)) return mem[w][y]=i;
-//     }
-
-// }
-int sg(int w, int y) {
-    if (w == 1) return y + 1;
-    return (w&1) ? y^1 : y;
-}
-
-int n;
-const int N = 1024;
-vector< pair<int, int> > son[N];
-int dfs(int u, int fa) {
-    int ans = 0;
-    for(auto p: son[u]) {
-        int v, w; tie(v, w) = p;
-        if (v == fa) continue;
-        ans ^= sg(w, dfs(v, u));
+int mem[10010];
+// bitset<10010> vis;
+short vis[10010];
+int sg(int n) {
+    if (n <= 2) return 0;
+    if (mem[n]>-1) return mem[n];
+    // vis.reset();
+    mmst(vis, 0);
+    rep(i,1,n/2) {
+        int j = n-i;
+        if(j==i) continue;
+        vis[sg(i) ^ sg(j)] = 1;
     }
-    return ans;
+    for(int i=0; ; ++i) {
+        if(!vis[i]) return mem[n]=i;
+    }
 }
+
+void init() {
+    mmst(mem, -1);
+    rep(n,3,10000) sg(n);
+}
+
 void solve() {
-    n=read();
-    rep(i,1,n) son[i].clear();
-    rep(i,1,n-1){
-        int u=read()+1;
-        int v=read()+1;
-        int w=read();
-        son[u].push_back(make_pair(v, w));
-        son[v].push_back(make_pair(u, w));
+    int m=read();
+    int ans=0;
+    For(_, m) {
+        int n=read();
+        ans ^= sg(n);
     }
-    int ans = dfs(1, 0);
-    puts(ans ? "Emily" : "Jolly");
+    puts(ans ? "Alice" : "Bob");
+
 }
+
+// int main() {
+//     freopen("tmp", "w", stdout);
+//     mmst(mem, -1);
+//     rep(n, 0, 100) {
+//         printf("n=%d, sg=%d\n", n, sg(n));
+//     }
+// }
 
 int main() {
 #ifdef D
-    freopen("LightOJ-1355.in", "r", stdin);
+    freopen("LightOJ-1199.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-<<<<<<< HEAD
     init();
-=======
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
     int T=read();
     rep(cas,1,T){
         printCase(cas);
         solve();
     }
-<<<<<<< HEAD
-=======
-    // mmst(mem, -1);
-    // rep(w, 1, 10) {
-    //     rep(y, 0, 10) {
-    //         printf("w=%d, y=%d, sg=%d\n", w, y, sg(w, y));
-    //     }
-    // }
-
-
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

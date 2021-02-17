@@ -40,78 +40,70 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+int mem[1024];
+int sg(int n) {
+    if (n == 1) return 0;
+    if (mem[n]>-1) return mem[n];
 
-// int mem[100][100];
-// int sg(int w, int y) {
-//     if (w == 1) return y + 1;
-//     if (y == 0 && (w % 2) == 0) return 0; 
-//     if (mem[w][y] > -1) return mem[w][y];
-
-//     set<int> st;
-//     st.insert(sg(w-1, y));
-//     rep(i, 0, y-1) st.insert(sg(w, i));
-
-//     for(int i=0; ; ++i) {
-//         if (!st.count(i)) return mem[w][y]=i;
-//     }
-
-// }
-int sg(int w, int y) {
-    if (w == 1) return y + 1;
-    return (w&1) ? y^1 : y;
+    short vis[1024] = {0};
+    rep(i,1,n/2) vis[sg(n-i)] = 1;
+    for(int i=0; ; ++i) if (!vis[i]) return mem[n]=i;
 }
 
-int n;
-const int N = 1024;
-vector< pair<int, int> > son[N];
-int dfs(int u, int fa) {
-    int ans = 0;
-    for(auto p: son[u]) {
-        int v, w; tie(v, w) = p;
-        if (v == fa) continue;
-        ans ^= sg(w, dfs(v, u));
+
+int sg2(int n) {
+    int m=n+1;
+    while(!(m&1)) m>>=1;
+    if (m == 1) return 0;
+    int j=0;
+    For(i, 31) {
+        if ((1<<i) & m) j = i;
     }
-    return ans;
+    int k=m;
+    k ^= (1<<j);
+    k >>= 1;
+    return (1<<(j-1)) + k;
 }
+
+
+
+void init() {
+    mmst(mem, -1);
+    // rep(n,1,50) {
+    //     printf("n=%d, sg=%d\n", n, sg(n));
+    // }
+    rep(j,0,50){
+        rep(n,1,50){
+            if (sg(n) == j) {
+                printf("n=%d\tsg=%d\t", n, sg(n));
+                // printf("n=%d, sg=%d, g=%d\n", n, sg(n), sg2(n));
+                cout << bitset<10>(n+1) << endl;
+            }
+        }
+    }
+}
+
 void solve() {
-    n=read();
-    rep(i,1,n) son[i].clear();
-    rep(i,1,n-1){
-        int u=read()+1;
-        int v=read()+1;
-        int w=read();
-        son[u].push_back(make_pair(v, w));
-        son[v].push_back(make_pair(u, w));
+    int n=read();
+    int ans=0;
+    For(_,n) {
+        ans ^= sg2(read());
     }
-    int ans = dfs(1, 0);
-    puts(ans ? "Emily" : "Jolly");
+    puts(ans ? "Alice" : "Bob");
+
 }
 
 int main() {
 #ifdef D
-    freopen("LightOJ-1355.in", "r", stdin);
+    freopen("LightOJ-1296.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-<<<<<<< HEAD
     init();
-=======
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
     int T=read();
     rep(cas,1,T){
         printCase(cas);
         solve();
     }
-<<<<<<< HEAD
-=======
-    // mmst(mem, -1);
-    // rep(w, 1, 10) {
-    //     rep(y, 0, 10) {
-    //         printf("w=%d, y=%d, sg=%d\n", w, y, sg(w, y));
-    //     }
-    // }
-
-
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
