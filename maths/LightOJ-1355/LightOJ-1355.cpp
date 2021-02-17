@@ -92,17 +92,11 @@ int main() {
     freopen("LightOJ-1355.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-<<<<<<< HEAD
-    init();
-=======
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
     int T=read();
     rep(cas,1,T){
         printCase(cas);
         solve();
     }
-<<<<<<< HEAD
-=======
     // mmst(mem, -1);
     // rep(w, 1, 10) {
     //     rep(y, 0, 10) {
@@ -111,7 +105,6 @@ int main() {
     // }
 
 
->>>>>>> 2d451e9994dca14ea70f48db8ff7b322d60d7d2c
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
