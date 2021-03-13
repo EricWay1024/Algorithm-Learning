@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -44,9 +44,18 @@ inline ll read(){
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("2261.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    ll n, k;
+    n=read(), k=read();
+    ll s = 0;
+    for(ll l=1, r; l<=n; l=r+1) {
+        if (l > k) break;
+        r = min(n, k/(k/l)); // for r may not exceed n
+        s += (r-l+1) * (l+r) / 2 * (k / l);
+    }
+    cout << (n*k-s) << endl;
 
 
 #ifdef D

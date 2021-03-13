@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -40,13 +40,41 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
-
+ll a[20]; int n, m;
+ll gcd(ll a, ll b) {
+    return b ? gcd(b, a%b) : a;
+}
+ll lcm(ll a, ll b) {
+    return a / gcd(a, b) * b;
+}
+ll cnt(ll s) {
+    // with set s, return # of k's where 1<=k<=n and k is divisible by all numbers in s
+    ll t = 1;
+    ll sign = 1;
+    For(j, m) {
+        int i = (1<<j);
+        if (i & s) {
+            t = lcm(t, a[j]);
+            sign = -sign;
+        }
+        if (t > n) return 0;
+    }
+    return (n/t) * sign;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("UVA-10325.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    while(~scanf("%d%d", &n, &m)) {
+        For(i,m) a[i]=read();
+        ll res = 0;
+        For(s, 1<<m) {
+            res += cnt(s);
+        }
+        printf("%lld\n", res);
+    }
 
 
 #ifdef D

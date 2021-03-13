@@ -12,7 +12,7 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
+#include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
@@ -41,13 +41,49 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+ll a[20]; ll n,  m,  cnt;
+ll gcd(ll a, ll b){
+    return b ? gcd(b, a % b) : a;
+}
+
+ll lcm(ll a, ll b) {
+    return a / gcd(a, b) * b;
+}
+
+ll contribution(ll s) {
+    ll sign=-1;
+    ll l=1;
+    For(i,cnt) {
+        int j=(1<<i);
+        if (j & s) {
+            sign = -sign;
+            l = lcm(l, a[i]);
+        }
+    }
+    return (n/l)*sign;
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-1796.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    while(~scanf("%lld%lld", &n, &m)) {
+        n--;
+        cnt = 0;
+        while(m--) {
+            ll x=read();
+            if (x) a[cnt++] = x;
+        }  
 
+        ll ans=0;
+        for(ll s=1; s<(1<<cnt); ++s){
+            ll cn = contribution(s);
+            ans += cn;        
+        }
+        printf("%lld\n", ans);
+    }
 
 #ifdef D
     clock_t TIMEB=clock();

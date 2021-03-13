@@ -12,7 +12,7 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
+#include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
@@ -40,14 +40,46 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+const int N=50000+10;
+short mu[N], flag[N]; int p[N], tot;
+ll sum[N]; ll c[N];
+void getMu(int n) {
+    mu[1]=1;
+    rep(i,2,n){
+        if(!flag[i]) p[++tot]=i, mu[i]=-1;
+        for(int j=1; j<=tot && p[j]<=n/i; ++j){
+            int m=i*p[j];
+            flag[m]=1;
+            if(i%p[j] == 0) {
+                mu[m] = 0;
+                break;
+            } else {
+                mu[m] = mu[i] * mu[p[j]];
+            }
+        }
+    }
+}
 
+ll brutal_h(ll n) {
+    ll ans=0;
+    rep(d,1,n){
+        if(n%d==0){
+            ans += mu[d]*mu[d]*d*mu[n/d];
+        }
+    }
+    return ans;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("P3911.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    getMu(N-1);
 
+    rep(i,1,30){
+        logs(i, brutal_h(i))
+    }
 
 #ifdef D
     clock_t TIMEB=clock();

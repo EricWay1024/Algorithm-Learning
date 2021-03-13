@@ -1,0 +1,32 @@
+i, brutal_h(i) -> 1 1 
+i, brutal_h(i) -> 2 1 
+i, brutal_h(i) -> 3 2 
+i, brutal_h(i) -> 4 -2 
+i, brutal_h(i) -> 5 4 
+i, brutal_h(i) -> 6 2 
+i, brutal_h(i) -> 7 6 
+i, brutal_h(i) -> 8 0 
+i, brutal_h(i) -> 9 -3 
+i, brutal_h(i) -> 10 4 
+i, brutal_h(i) -> 11 10 
+i, brutal_h(i) -> 12 -4 
+i, brutal_h(i) -> 13 12 
+i, brutal_h(i) -> 14 6 
+i, brutal_h(i) -> 15 8 
+i, brutal_h(i) -> 16 0 
+i, brutal_h(i) -> 17 16 
+i, brutal_h(i) -> 18 -3 
+i, brutal_h(i) -> 19 18 
+i, brutal_h(i) -> 20 -8 
+i, brutal_h(i) -> 21 12 
+i, brutal_h(i) -> 22 10 
+i, brutal_h(i) -> 23 22 
+i, brutal_h(i) -> 24 0 
+i, brutal_h(i) -> 25 -5 
+i, brutal_h(i) -> 26 12 
+i, brutal_h(i) -> 27 0 
+i, brutal_h(i) -> 28 -12 
+i, brutal_h(i) -> 29 28 
+i, brutal_h(i) -> 30 8 
+
+# Time consumed: 0.001s.

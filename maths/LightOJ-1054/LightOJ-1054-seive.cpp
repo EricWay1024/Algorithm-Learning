@@ -7,16 +7,16 @@
 #include<ctime>
 #include<deque>
 #include<iostream>
-#include<map>
+#include<unordered_map>
 #include<queue>
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -40,15 +40,74 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+const int N = 1e5+10;
+int flag[N], prime[N], tot;
+void init(int n) {
+    rep(i,2,n) {
+        if (!flag[i]) prime[++tot]=i;
+        rep(j,1,tot) {
+            if (prime[j] > n/i) break;
+            flag[i * prime[j]] = 1;
+            if (i % prime[j] == 0) break;
+        }
+    }
+}
 
+const ll M = 1000000007;
+ll quick_pow(ll a, ll b) {
+    ll ans=1; a%=M;
+    for(; b; b>>=1, a=a*a%M) if (b & 1) ans = ans*a%M;
+    return ans;
+}
+ll inv(ll a) {
+    return quick_pow(a, M-2);
+}
+ll sigma(ll p, ll k) {
+    return (quick_pow(p, k+1)-1)*inv(p-1)%M;
+}
+
+unordered_map<ll, int> mp;
+void factor(ll k) {
+    mp.clear();
+    rep(i,1,tot) {
+        if (prime[i] > sqrt(k)) break;
+        if (k % prime[i] == 0) {
+            int c = 0;
+            while(k % prime[i] == 0) {
+                c++;
+                k /= prime[i];
+            }
+            mp[prime[i]] = c;
+        }
+    }
+    if (k > 1) mp[k] = 1;
+}
+ll n, m;
+
+void solve() {
+    n=read(), m=read();
+    factor(n);
+    ll ans=1;
+    for(auto pr: mp) {
+        ll p; int k; tie(p, k) = pr;
+        ans *= sigma(p, 1ll * k * m);
+        ans %= M;
+    }
+    ans += M; ans %= M;
+    cout << ans << endl;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1054.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init(N-2);
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

@@ -12,7 +12,7 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
+#include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
@@ -40,13 +40,59 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+const int N = 123;
+ld mt[N][N];
+int n;
 
+void swap_rows(int i, int j) {
+    rep(k,1,n+1) swap(mt[i][k], mt[j][k]);
+}
+void scalar_prod(int i, ld t) {
+    rep(k,1,n+1) mt[i][k] *= t;
+}
+void mul_and_add(int i, int j, ld t) {
+    // row i <= row i + row j * t
+    rep(k,1,n+1) mt[i][k] += mt[j][k] * t;
+}
+
+ld eps = 1e-7;
+int dcmp(ld x) {
+    if (abs(x) < eps) return 0;
+    return x > 0 ? 1 : -1;
+}
+bool gauss() {
+    rep(i,1,n){
+        int k=i;
+        rep(j,i+1,n) if (abs(mt[j][i]) > abs(mt[k][i])) k = j;
+        if (k != i) swap_rows(i, k);
+        if (dcmp(mt[i][i]) == 0) return 0;
+        scalar_prod(i, 1/mt[i][i]);
+        rep(j,1,n) if (j != i && dcmp(mt[j][i]) != 0) {
+            mul_and_add(j, i, -mt[j][i]);
+        }
+    }
+    return 1;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("P3389.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    n=read();
+    rep(i,1,n){
+        rep(j,1,n+1){
+            mt[i][j]=read();
+        }
+    }
+    bool ret = gauss();
+    if (ret) {
+        rep(i,1,n) {
+            coutP(2) << mt[i][n+1] << endl;
+        }
+    } else {
+        puts("No Solution");
+    }
 
 
 #ifdef D

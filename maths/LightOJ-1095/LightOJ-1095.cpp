@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -40,15 +40,57 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+const ll M = 1000000007;
+ll fac[1024];
+void init() {
+    fac[0]=1;
+    rep(i,1,1000){
+        fac[i] = fac[i-1] * i % M;
+    }
+}
+ll quick_pow(ll a, ll b, ll M) {
+    ll ans=1;
+    for(; b; b>>=1, a=a*a%M) if (b&1) ans=ans*a%M;
+    return ans;
+}
+ll inv(ll a, ll M) {
+    return quick_pow(a, M-2, M);
+}
+// ll binomial(ll n, ll k) {
+//     if (k < 0 || n < k) return 0;
+//     if (k == 0 || n == k) return 1;
+//     return fac[n] * inv(fac[k]*fac[n-k]%M, M) % M;
+// }
+ll contribution(ll n, ll m, ll k, ll i) {
+    return fac[m] * fac[n-i] % M * inv(fac[k] * fac[i-k] % M * fac[m-i] % M, M) % M;
 
+}
+
+void solve() {
+    ll n=read(), m=read(), k=read();
+    ll ans=0;
+    rep(i,k,min(m, n)) {
+        ll c = contribution(n, m, k, i);
+        // logs(c);
+        if ((k-i) & 1) ans -= c;
+        else ans += c;
+        ans %= M;
+    }
+    ans += M; ans %= M;
+    cout << ans << endl;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1095.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

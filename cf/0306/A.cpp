@@ -12,7 +12,7 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
+#include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
@@ -41,12 +41,30 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+const ll M = 998244353;
+ll quick_pow(ll a, ll b) {
+    ll ans=1;
+    for(; b; b>>=1, a=(a*a)%M) if (b&1) ans=(ans*a)%M;
+    return ans;
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("A.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    int T=read();
+    while(T--) {
+        int k=read();
+
+        ll ans=0;
+        ll t1 = (3*k-4)*quick_pow(4, k-1)%M;
+        ll t2 = quick_pow(2, k);
+        ans = (t1 + t2 )% M;
+
+        printf("%lld\n", ans);
+    }
 
 
 #ifdef D

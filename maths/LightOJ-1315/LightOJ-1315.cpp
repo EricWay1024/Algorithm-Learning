@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -41,14 +41,59 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+const int N = 512;
+const int d[6][2] = {
+    {1, -2}, {-1, -3}, {-1, -2}, {-2, -1}, {-3, -1}, {-2, 1}
+};
+
+int mem[N][N];
+int sg(int x, int y) {
+    if (mem[x][y]>-1) return mem[x][y];
+    short vis[20] = {0};
+    For(i, 6) {
+        int dx = d[i][0], dy = d[i][1];
+        int nx = x + dx, ny = y + dy;
+        if (nx < 0 || ny < 0) continue;
+        vis[sg(nx, ny)] = 1;
+    }
+
+    for(int i=0; ; ++i) if (!vis[i]) return mem[x][y]=i;
+
+}
+void init() {
+    mmst(mem, -1);
+    // int m=0;
+    // rep(x, 0, N-2) {
+    //     rep(y, 0, N-2) {
+    //         sg(x, y);
+    //         // m=max(m, sg(x, y));
+    //     }
+    // }
+    // cout << 'm' << m << endl;
+}
+
+void solve() {
+    int n=read();
+    int ans=0;
+    rep(i,1,n) {
+        int x=read(), y=read();
+        ans ^= sg(x, y);
+    }
+    puts(ans ? "Alice" : "Bob");
+
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1315.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

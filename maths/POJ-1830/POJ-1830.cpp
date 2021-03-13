@@ -12,7 +12,7 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
+#include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
@@ -40,13 +40,68 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+short mt[35][35]; int n;
+void output() {
+    cout << "---\n";
+    rep(i,1,n){
+        rep(j,1,n+1){
+            cout << mt[i][j] << ' ';
+        }
+        cout << endl;
+    }
+}
+
+void swap_rows(int i, int j) {
+    if (i == j) return;
+    rep(k,1,n+1) swap(mt[i][k], mt[j][k]);
+}
+void xor_equal_row(int i, int j) {
+    rep(k,1,n+1) mt[i][k] ^= mt[j][k];
+}
+ll gauss() {
+    int r=1;
+    rep(c,1,n){
+        int k=-1;
+        rep(j,r,n) if (mt[j][c]) { k=j; break; }
+        if (k == -1) continue;
+        else swap_rows(r, k);
+        rep(j,1,n) if (j != r && mt[j][c] == 1) {
+            xor_equal_row(j, r);
+        }
+        r++;
+        // output();
+    }
+    
+    rep(i,r,n){
+        if (mt[i][n+1] != 0) return 0;
+    }
+    return 1<<(n+1-r);  
+}
 
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("POJ-1830.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    int T=read();
+    while(T--){
+        mmst(mt, 0);
+        n=read();
+        For(_, 2){
+            rep(i,1,n) mt[i][n+1] ^= read();
+        }
+        rep(i,1,n) mt[i][i]=1;
+        int a, b;
+        while(1) {
+            a = read(), b=read();
+            if (!a && !b) break;
+            mt[b][a]=1;
+        }
+        ll res = gauss();
+        if (res) cout << res << endl;
+        else puts("Oh,it's impossible~!!");
+    }
 
 
 #ifdef D

@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -42,13 +42,60 @@ inline ll read(){
 }
 
 
+const ll M = 1000000007ll;
+const ll N = 2e6;
+ll fact[N+19];
+ll quick_pow(ll a, ll b, ll M) {
+    ll ans=1;
+    for(; b; b>>=1, a=a*a%M) if (b&1) ans=ans*a%M;
+    return ans;
+}
+ll inv(ll a, ll M) {
+    return quick_pow(a, M-2, M);
+}
+
+void init(int n) {
+    fact[1] = fact[0] = 1;
+    rep(i,1,n){
+        fact[i] = fact[i-1] * i % M;
+    }
+}
+
+ll binomial(ll n, ll k) {
+    if (n < k || k < 0) return 0;
+    return fact[n] * inv(fact[n-k]*fact[k]%M, M) % M;
+}
+
+
+void solve() {
+    ll n=read();
+    ll a1=read(); 
+    if (n == 1) {
+        cout << 1 << endl;
+        return;
+    }
+    ll a2=read();
+    ll u=a1+a2-1, d=a1;
+    ll ans=binomial(u, d);
+    rep(i,1,n-2){
+        ll ai=read();
+        tie(u, d) = make_tuple(u + ai, u+1);
+        ans = ans * binomial(u, d) % M;
+    }
+    cout << ans << endl;
+}
+
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1226.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init(1e6);
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

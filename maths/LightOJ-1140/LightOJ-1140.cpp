@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -40,15 +40,42 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+void init() {
 
+}
+
+// ll mem[32][2];
+// vector<int> dim;
+// vector<int> suffix;
+// ll dfs(ll x, ll op) {
+//     if (x == -1) return 0;
+//     ll &ret = mem[x][op];
+//     if (ret > -1) return ret;
+//     ll mx = op ? dim[x] : 9;
+//     ll ans=0;
+//     if (op && dim[x] == 0) {
+//         ans += suffix[x];
+//     } else {
+//         ans += pow(10, x);
+//     }
+
+// }
+
+void solve() {
+
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1140.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -40,15 +40,49 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+void init() {
 
+}
+
+ll gcd(ll a, ll b) {
+    return b ? gcd(b, a%b) : a;
+}
+ll lcm(ll a, ll b) {
+    return a / gcd(a, b) * b;
+}
+
+ll a[30];
+ll contribution(ll s, ll n, ll m) {
+    ll sign = 1;
+    ll lc = 1;
+    For(i, m) if (s&(1<<i)) {
+        sign = -sign;
+        lc = lcm(a[i], lc);
+        if (lc > n) return 0;
+    }
+    return sign * (n/lc);
+}
+void solve() {
+    ll n=read(), m=read();
+    For(i, m) a[i]=read();
+    ll ans=0;
+    For(s, 1<<m) {
+        ans += contribution(s, n, m);
+    }
+    cout << ans << endl;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1117.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init();
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        solve();
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

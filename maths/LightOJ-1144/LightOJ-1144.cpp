@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -40,15 +40,55 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
+const int N = 1e6+10;
+int mu[N], flag[N], prime[N/10], tot;
+void init(int n) {
+    mu[1]=1;
+    rep(i,2,n){
+        if (!flag[i]) prime[++tot]=i, mu[i]=-1;
+        rep(j,1,tot){
+            if(prime[j]>n/i) break;
+            int m = i * prime[j];
+            flag[m] = 1;
+            if (i % prime[j] != 0) {
+                mu[m] = -mu[i];
+            } else {
+                mu[m] = 0;
+                break;
+            }
+        }
+    }
+    rep(i,1,n) mu[i] += mu[i-1];
+}
 
+ll solve() {
+    ll n=read(), m=read();
+    if (m > n) swap(m, n);
+    if (m == 0 && n == 0) {
+        return 0;
+    } else if (m == 0) {
+        return 1;
+    }
+
+    ll ans=2;
+    for(ll l=1, r; l<=m; l=r+1){
+        r=min(m/(m/l), n/(n/l)); r=min(r, m);
+        ans += (0ll + mu[r] - mu[l-1]) * (m/l) * (n/l);
+    }
+    return ans;
+}
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("LightOJ-1144.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
-
-
+    init(N-1);
+    int T=read();
+    rep(cas,1,T){
+        printCase(cas);
+        cout << solve() << endl;
+    }
 #ifdef D
     clock_t TIMEB=clock();
     printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);

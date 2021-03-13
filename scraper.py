@@ -69,12 +69,25 @@ def vjudge_scraper(problem_id):
             return ans
     raise RuntimeError('Unknown web page format.')
 
+def uva_scraper(problem_id):
+    pass
 
 def scraper(problem_id, oj):
-    if (oj == 'luogu'):
-        return luogu_scraper(problem_id)
-    else:
+    try:
         return vjudge_scraper(problem_id)
+    except:
+        pass
+
+    try:
+        return luogu_scraper(problem_id)
+    except:
+        pass
+
+    raise RuntimeError('No scraper worked.')
+    # if (oj == 'luogu'):
+    #     return luogu_scraper(problem_id)
+    # else:
+    #     return vjudge_scraper(problem_id)
 
 if __name__ == '__main__':
     print(vjudge_scraper('SGU-325'))

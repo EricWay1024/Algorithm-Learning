@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -41,12 +41,53 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+const int N = 6e4+5;
+ll mu[N];
+bool flg[N];
+ll p[N], tot;
+void getMu(int n) {
+    mu[1] = 1;
+    rep(i,2,n) {
+        if (!flg[i]) mu[i] = -1, p[++tot]=i;
+        for(int j=1; j<=tot && i*p[j]<=n; ++j) {
+            flg[i * p[j]] = 1;
+            if (i % p[j] == 0) {
+                mu[i * p[j]] = 0;
+                break;
+            }
+            mu[i * p[j]] = -mu[i];
+        }
+    }
+}
+ll sum_mu[N];
+
+void init() {
+    int n=N-2;
+    getMu(n);
+    rep(i,1,n){
+        sum_mu[i] = sum_mu[i-1] + mu[i];
+    }
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("3455.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    init();
+    ll T=read();
+    while(T--){
+        ll a=read(), b=read(), k=read();
+        a /= k, b /= k;
+        if (a > b) swap(a, b);
+        ll ans=0;
+        for(ll l=1, r; l<=a; l=r+1) {
+            r = min(a/(a/l), b/(b/l)); r = min(r, a);
+            ans += (a/l) * (b/l) * (sum_mu[r] - sum_mu[l-1]);
+        }
+        cout << ans << endl;
+    }
 
 
 #ifdef D

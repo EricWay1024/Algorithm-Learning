@@ -12,11 +12,11 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
 #include<functional>
+// #include<cstdint>
 #include<climits>
 #include<iomanip>
 using namespace std;
@@ -41,12 +41,64 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+int game[20][20];
+bool flag=0;
+void outputgame(int k) {
+    cout << "---" << endl;
+    rep(i,1,k){
+        rep(j,1,k){
+            cout << game[i][j] << ' ';
+        }
+        cout << endl;
+    }
+}
+
+bool checkgame(int k){
+    set<int> st;
+    rep(i,1,k){
+        int sum=0;
+        rep(j,1,k){
+            sum+=game[i][j];
+        }
+        if (st.count(sum)) return 0;
+        st.insert(sum);
+    }
+
+    rep(j,1,k){
+        int sum=0;
+        rep(i,1,k){
+            sum+=game[i][j];
+        }
+        if (st.count(sum)) return 0;
+        st.insert(sum);
+    }
+    return flag=1;
+
+}
+void search(int k, int x, int y) {
+    // if (flag) return;
+    if (x == k+1) {
+        search(k, 1, y+1);
+        return;
+    }
+    if (y == k+1) {
+        if (checkgame(k)) outputgame(k);
+        return;
+    }
+    rep(d,-1,1){
+        game[x][y]=d;
+        search(k, x+1, y);
+    }
+}
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("FZU-1911.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    flag = 0;
+    search(4, 1, 1);
 
 
 #ifdef D

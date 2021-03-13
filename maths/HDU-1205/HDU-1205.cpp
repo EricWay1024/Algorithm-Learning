@@ -12,7 +12,7 @@
 #include<set>
 #include<stack>
 #include<string>
-// #include<unordered_map>
+#include<unordered_map>
 #include<utility>
 #include<vector>
 #include<numeric>
@@ -41,12 +41,50 @@ inline ll read(){
     return s?x:~x+1;
 }
 
+// int a[100];
+// int n;
+// int dfs(int s) {
+//     ll sum=0;
+//     rep(i,1,n) sum+=a[i];
+//     if (!sum) return 1;
+
+//     rep(i,1,n) if (i!=s && a[i]>0) {
+//         a[i]--;
+//         int res = dfs(i);
+//         a[i]++;
+//         if (res) return 1;
+//     }
+//     return 0;
+// }   
+
 
 int main() {
 #ifdef D
-    freopen("", "r", stdin);
+    freopen("HDU-1205.in", "r", stdin);
     clock_t TIMEA = clock();
 #endif
+    // n=3;
+    // rep(x,1,20){
+    //     rep(y,1,x){
+    //         rep(z,1,y){
+    //             a[1]=x, a[2]=y, a[3]=z;
+    //             logs(x, y, z, dfs(-1));
+    //         }
+    //     }
+    // }
+    int T=read();
+    ll mx, sm, n, a;
+    while(T--){
+        mx=0, sm=0;
+        n=read();
+        while(n--){
+            a=read();
+            mx=max(mx, a);
+            sm+=a;
+        }
+        if (mx > sm-mx+1) puts("No");
+        else puts("Yes");
+    }
 
 
 #ifdef D
