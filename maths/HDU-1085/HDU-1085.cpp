@@ -40,14 +40,9 @@ inline ll read(){
     while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
     return s?x:~x+1;
 }
-const int N = 6000;
-
-void poly_clean(int *a, int n) {
-    rep(i,0,n) a[i]=0;
-}
+const int N = 10005;
 
 void poly_multiply(int *a, int *b, int *c, int n) {
-    poly_clean(c, n);
     rep(i,0,n){
         rep(j,0,n) if(i+j<=n) {
             c[i+j] += a[i] * b[j];
@@ -56,7 +51,6 @@ void poly_multiply(int *a, int *b, int *c, int n) {
 }
 
 void poly_init(int *a, int n, int k) {
-    poly_clean(a, n);
     for(int t=0; t<=n; t+=k) a[t]=1;
 }
 
@@ -64,10 +58,12 @@ int a[N], b[N], c[N];
 void solve(int num1, int num2, int num5) {
     int n=1*num1+2*num2+5*num5;
 
+    mmst(a, 0); mmst(b, 0); mmst(c, 0);
     poly_init(a, num1, 1);
     poly_init(b, num2 * 2, 2);
     poly_multiply(a, b, c, n);
 
+    mmst(b, 0); mmst(a, 0);
     poly_init(b, num5 * 5, 5);
     poly_multiply(c, b, a, n);
 
@@ -78,7 +74,7 @@ void solve(int num1, int num2, int num5) {
             break;
         }
     }
-    cout << ans << endl;
+    printf("%d\n", ans);
 }
 
 // int const xn=305;
