@@ -6,7 +6,7 @@ from sys import exit
 from scraper import luogu_scraper, scraper
 from pathlib import Path
 
-BASE_PATH = Path('/home/eric/project/Algorithm-Learning')
+BASE_PATH = Path('/home/eric/Documents/Algorithm-Learning')
 
 problem_type = argv[1]
 problem = argv[2].split('/')[-1]
@@ -49,6 +49,9 @@ cppcode = cppcode.replace('freopen("", "r", stdin);', f'freopen("{problem}.in", 
 with open(BASE_PATH / f'{problem_type}/{problem}/{problem}.cpp', 'w') as f:
     f.write(cppcode)
 
+problem_path = str(BASE_PATH / f'{problem_type}/{problem}/{problem}.cpp')
+system('code -g ' + problem_path)
+
 # chdir(f'./{problem_type}/{problem}/')
 print("Fetching input data...")
 
@@ -66,5 +69,4 @@ if oj in ['v', 'l', '']:
     print(input_value)
 print(F"---END---\nEnjoy coding {problem}!")
 
-problem_path = str(BASE_PATH / f'{problem_type}/{problem}/{problem}.cpp')
-system('code -g ' + problem_path)
+

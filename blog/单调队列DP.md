@@ -27,7 +27,7 @@ f(i) = \min _{j \in S(i)} \{g(j)\} +h(i)
 $$
 若满足
 $$
-\forall i_1 < i_2, (\exists i_0 < i_1, j\in S(i_0) ) \and j \not \in S(i_1) \implies j \not \in S(i_2)
+\forall i_1 < i_2, (\exists i_0 < i_1, j\in S(i_0) ) \land j \not \in S(i_1) \implies j \not \in S(i_2)
 $$
 （这表明当$i$增大时，对符合条件的$j$的集合的每个删除操作都是不需复原的。）
 

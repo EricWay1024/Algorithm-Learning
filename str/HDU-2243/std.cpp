@@ -12,7 +12,7 @@ const int maxn =  200;
 int trie[maxn][26]; //字典树
 int cntword[maxn];  //记录该单词出现次数
 int fail[maxn];     //失败时的回溯指针
-int cnt = 0;//结点个数
+int tot = 0;//结点个数
 bool tag[maxn];
 ll L;
 int n;
@@ -62,7 +62,7 @@ void insertWords(char s[],int len) {
 	for(int i=0; i<len; i++) {
 		int next = s[i] - 'a';
 		if(!trie[root][next])
-			trie[root][next] = cnt++;
+			trie[root][next] = tot++;
 		root = trie[root][next];
 	}
 	tag[root]=true;      //当前结点单词数+1
@@ -91,28 +91,28 @@ void getFail() {
 void query() {
 	ull ans = 0;
 	Mat c,d;
-	for(int i=0; i<cnt+1; i++) {
-		for(int j=0; j<cnt+1; j++) {
+	for(int i=0; i<tot+1; i++) {
+		for(int j=0; j<tot+1; j++) {
 			c.m[i][j] = 0;
 			d.m[i][j] = 0;
 		}
 	}
-	for(int i=0; i<cnt; i++) {
+	for(int i=0; i<tot; i++) {
 			if(tag[i])continue;
 		for(int j=0; j<26; j++) {
 			if(!tag[trie[i][j]])c.m[i][trie[i][j]]++;
 		}
 	}
-	for(int i=0; i<=cnt; i++)c.m[i][cnt] = 1;
+	for(int i=0; i<=tot; i++)c.m[i][tot] = 1;
 
-	cnt++;
-	c = poww(c,(ll)(L),cnt);
+	tot++;
+	c = poww(c,(ll)(L),tot);
 	d.m[0][0] = 1;
 	d.m[0][1] = 26;
 	d.m[1][0] = 0;
 	d.m[1][1] = 26;
 	d = poww(d,(ll)L,2);
-	for(int i=0; i<cnt; i++)ans+=c.m[0][i];
+	for(int i=0; i<tot; i++)ans+=c.m[0][i];
     logs(ans)
 	ull res1 = d.m[0][1];
     logs(res1)
@@ -129,7 +129,7 @@ int main() {
 		memset(fail,0,sizeof(fail));
 		memset(trie,0,sizeof(trie));
 		memset(tag,false,sizeof(tag));
-		cnt = 1;
+		tot = 1;
 		for(int i=0; i<n; i++) {
 			scanf("%s",s) ;//输入单词
 			insertWords(s,strlen(s));

@@ -27,9 +27,13 @@ using namespace std;
 #define printCase(i) printf("Case %d: ", i)
 #define endl '\n'
 #define coutP(i) cout<<fixed<<setprecision(i)
-void dbg() {cout << "\n";}
-template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
-#define logs(x...) {cout << #x << " -> "; dbg(x);}
+#ifdef D
+    void dbg() {cout << "\n";}
+    template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
+    #define logs(x...) {cout << #x << " -> "; dbg(x);}
+#else
+    template<typename T, typename... Args> void logs(T t, Args... args) {};
+#endif
 #define mmst(a,x) memset(a, x, sizeof(a))
 typedef long long ll;
 typedef long double ld;
