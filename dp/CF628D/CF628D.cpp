@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define rep(i,from,to) for(register int i=from;i<=to;++i)
-#define For(i,to) for(register int i=0;i<to;++i)
+#define rep(i,from,to) for(int i=from;i<=to;++i)
+#define For(i,to) for(int i=0;i<to;++i)
 typedef long long ll;
 inline ll read(){
     ll x=0; ll sign=1; char c=getchar();

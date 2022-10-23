@@ -28,22 +28,20 @@ using namespace std;
 #define endl '\n'
 #define coutP(i) cout<<fixed<<setprecision(i)
 #ifdef D
-    void dbg() {cout << "\n";}
-    template<typename T, typename... A> void dbg(T a, A... x) {cout << a << ' '; dbg(x...);}
-    #define logs(x...) {cout << #x << " -> "; dbg(x);}
+    void dbg() {cerr << "\n";}
+    template<typename T, typename... A> void dbg(T a, A... x) {cerr << a << ' '; dbg(x...);}
+    #define logs(x...) {cerr << #x << " -> "; dbg(x);}
 #else
-    template<typename T, typename... Args> void logs(T t, Args... args) {};
+    #define logs(...) {}
 #endif
 #define mmst(a,x) memset(a, x, sizeof(a))
-typedef long long ll;
-typedef long double ld;
-typedef double db;
-inline ll read(){
-    ll x=0;bool s=1;char c=getchar();
-    while(c>'9'||c<'0'){if(c=='-')s=0;c=getchar();}
-    while(c>='0'&&c<='9'){x=(x<<3)+(x<<1)+c-'0';c=getchar();}
-    return s?x:~x+1;
-}
+typedef long long ll; typedef long double ld; typedef double db;
+typedef pair<ll,ll> pll; typedef pair<int,int> pii; typedef vector<ll> vll; typedef vector<int> vint;
+template <typename T> vector<T>& operator<< (vector<T> &v, T &x) { v.emplace_back(x); return v; }
+struct MyIn { 
+    template <typename T> MyIn& operator>> (T &x) { x=0;bool s=0;char c=getchar();while(c>'9'||c<'0'){if(c=='-')s=1;c=getchar();}while(c>='0'&&c<='9'){x=x*10+c-'0';c=getchar();}if(s)x=-x;return (*this); } 
+} rin;
+const int N2 = 112; const int N3 = 1123; const int N4 = 11234; const int N5 = 112345; const int N6 = 1123456; const int N7 = 11234567;
 
 
 int main() {
@@ -54,8 +52,8 @@ int main() {
 
 
 #ifdef D
-    clock_t TIMEB=clock();
-    printf("\n# Time consumed: %.3fs.\n", (float)(TIMEB-TIMEA)/CLOCKS_PER_SEC);
+    float TIMEUSED = (float)(clock()-TIMEA)/CLOCKS_PER_SEC;
+    if (TIMEUSED > 1e-3) printf("\n# Time consumed: %.3fs.\n", TIMEUSED);
 #endif
     return 0;
 }

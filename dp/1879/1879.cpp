@@ -16,8 +16,8 @@
 #include<utility>
 #include<vector>
 using namespace std;
-#define rep(i,from,to) for(register int i=(int)from;i<=(int)to;++i)
-#define For(i,to) for(register int i=0;i<(int)to;++i)
+#define rep(i,from,to) for(int i=(int)from;i<=(int)to;++i)
+#define For(i,to) for(int i=0;i<(int)to;++i)
 typedef long long ll;
 inline int read(){
     int x=0; int sign=1; char c=getchar();

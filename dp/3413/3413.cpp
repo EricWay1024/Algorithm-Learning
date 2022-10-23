@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #include <vector>
 using namespace std;
-#define rep(i,from,to) for(register int i=from;i<=to;++i)
-#define For(i,to) for(register int i=0;i<(int)to;++i)
+#define rep(i,from,to) for(int i=from;i<=to;++i)
+#define For(i,to) for(int i=0;i<(int)to;++i)
 typedef long long ll;
 
 const long long M = 1000000007;

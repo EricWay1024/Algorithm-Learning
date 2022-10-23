@@ -1,8 +1,8 @@
 #include<cstdio>
 #include<climits>
 using namespace std;
-#define rep(i,from,to) for(register int i=(int)(from);i<=(int)(to);++i)
-#define For(i,to) for(register int i=0;i<(int)(to);++i)
+#define rep(i,from,to) for(int i=(int)(from);i<=(int)(to);++i)
+#define For(i,to) for(int i=0;i<(int)(to);++i)
 typedef int ll;
 inline ll read(){
     ll x=0; ll sign=1; char c=getchar();

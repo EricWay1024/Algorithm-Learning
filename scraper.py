@@ -72,7 +72,37 @@ def vjudge_scraper(problem_id):
 def uva_scraper(problem_id):
     pass
 
-def scraper(problem_id, oj):
+
+def acwing_scraper(problem_id):
+    import requests
+    import re
+    cookies = {
+        'csrftoken': 'AuSuBo24AK5UVxhedxjZoTK3VmJAHuF9iEvbFwnsVKgLWcFNJo5taKlJ0f269psb',
+        'sessionid': 'hf16yrkdipqz1lr8leg55mgwgvespd9k',
+        'file_3080380_readed': '',
+    }
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Referer': 'https://www.acwing.com/problem/content/discussion/index/374/1/',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Cache-Control': 'max-age=0',
+    }
+
+    response = requests.get(f'https://www.acwing.com/problem/content/description/{problem_id}/', headers=headers, cookies=cookies)
+    text = response.text
+    pattern = re.compile(r'<pre><code>((?:.|\n)+?)</code></pre>')
+    match = pattern.search(text)
+    if match is None:
+        raise RuntimeError('No code found.')
+    code = match.group(1)
+    return code
+
+
+def scraper(problem_id):
     try:
         return vjudge_scraper(problem_id)
     except:
@@ -83,6 +113,11 @@ def scraper(problem_id, oj):
     except:
         pass
 
+    try:
+        return acwing_scraper(problem_id)
+    except:
+        pass
+
     raise RuntimeError('No scraper worked.')
     # if (oj == 'luogu'):
     #     return luogu_scraper(problem_id)
@@ -90,4 +125,5 @@ def scraper(problem_id, oj):
     #     return vjudge_scraper(problem_id)
 
 if __name__ == '__main__':
-    print(vjudge_scraper('SGU-325'))
+    # print(vjudge_scraper('SGU-325'))
+    print(acwing_scraper('2515'))
