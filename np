@@ -6,7 +6,7 @@ from sys import exit
 from scraper import luogu_scraper, scraper
 from pathlib import Path
 
-BASE_PATH = Path('/home/eric/Documents/Algorithm-Learning')
+BASE_PATH = Path('.')
 
 problem_type = argv[1]
 argv[2] = argv[2].rstrip('/')
